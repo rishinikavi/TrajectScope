@@ -908,7 +908,7 @@ export default function CreateProject() {
                       </div>
 
                       {formData.skills.map((skill, index) => (
-
+                        index == 0 &&
                         <div key={index} className="flex flex-row gap-2">
                           <span className=" p-2 w-1/3" >Skill</span>
 
@@ -983,15 +983,15 @@ export default function CreateProject() {
                       {
                         empAvilable ?
                           <div className="flex flex-row gap-2 justify-center">
-                            <span className=" p-2 w-1/3">Employee : {formData.empName} is Avilable</span>
+                            <span className=" p-2 w-1/3">Employee : {formData.empName} is Available</span>
                             <button onClick={addEmpToform} type="button" className="p-2 rounded bg-o1 text-b1 font-bold">Add</button>
                           </div>
-                          : shiowAvilable && <span>Employee not Avilable</span>
+                          : shiowAvilable && <span>Employee not Available</span>
                       }
                       {
                         SelectedEmp.length != 0 &&
                         <div className="flex flex-col">
-                          <span className="font-bold p-3 text-o1" >Selectted Employees</span>
+                          <span className="font-bold p-3 text-o1" >Selected Employees</span>
                           {formData.selectedEmp?.map((employee, index) => (
                             employee.length != 0 &&
                             <div key={index} className="flex flex-row p-2">
