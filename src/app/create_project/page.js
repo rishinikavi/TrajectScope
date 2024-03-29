@@ -1,6 +1,6 @@
 "use client"
 
-import { addProject, getEmp, getEmpBySkill, testApi, updateEmpAv } from "@/services/employee";
+import { addProject, getEmp, getEmpByName, getEmpBySkill, testApi, updateEmpAv } from "@/services/employee";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import DatePicker from 'react-datepicker';
@@ -327,6 +327,14 @@ export default function CreateProject() {
 
     setShowCategories2(updatedShowCategories2);
   };
+
+
+  const [empNames, setEmpNames] = useState([])
+
+  async function getEmpDataByName(nameEmp) {
+    const res = await getEmpByName(nameEmp);
+    setEmpNames(res.empdata);
+  }
 
   return (
     <main >
@@ -703,7 +711,13 @@ export default function CreateProject() {
                         <div className="flex flex-col gap-2 w-2/3 ">
                           <div className="relative">
                             <button type="button" className="bg-b3 p-2 rounded"
-                              onClick={() => handleCategoryToggle1(index)}>
+                              onClick={() => {
+                                handleCategoryToggle1(index)
+                                if (showCategories) {
+                                  setShowCategories(false)
+                                }
+                              }
+                              }>
                               {skill.skill ? skill.skill : "Select Skill"}
 
                             </button>
@@ -834,12 +848,37 @@ export default function CreateProject() {
                         <div className=" w-2/3">
                           <input
                             className="w-full p-2 bg-b3 rounded border border-black"
+                            value={formData.empName}
                             onChange={(event) => {
                               setFormData({
                                 ...formData,
                                 empName: event.target.value,
                               });
+                              getEmpDataByName(event.target.value)
                             }} />
+                          {
+                            empNames.length != 0 && formData.empName != "" &&
+                            <select
+                              className="w-full p-2 bg-b3 rounded border border-black"
+                              value={formData.empName}
+                              name="Empname"
+                              onChange={(event) => {
+                                setFormData({
+                                  ...formData,
+                                  empName: event.target.value,
+                                });
+                                setEmpNames("")
+                              }}
+                            >
+                              <option value="">Select Employee</option>
+                              {empNames.map((empName) => (
+                                <option key={empName.name} value={empName.name}>
+                                  {empName.name}
+                                </option>
+                              ))}
+                            </select>
+                          }
+
                         </div>
                       </div>
 
@@ -849,7 +888,7 @@ export default function CreateProject() {
                           <select
                             className="w-full p-2 bg-b3 rounded border border-black"
                             value={formData.empRole}
-                            name="skill"
+                            name="Role"
                             onChange={(event) => {
                               setFormData({
                                 ...formData,
@@ -858,10 +897,10 @@ export default function CreateProject() {
                             }}
 
                           >
-                            <option value="">Select Skill</option>
-                            {["Intern", "Associate", "Senior", "Lead", "Technical Lead", "Assistant Manager", "Assistant Technical Lead"].map((skillName) => (
-                              <option key={skillName} value={skillName}>
-                                {skillName}
+                            <option value="">Select Role</option>
+                            {["Intern", "Associate", "Senior", "Lead", "Technical Lead", "Assistant Manager", "Assistant Technical Lead"].map((RoleName) => (
+                              <option key={RoleName} value={RoleName}>
+                                {RoleName}
                               </option>
                             ))}
                           </select>
@@ -876,7 +915,14 @@ export default function CreateProject() {
                           <div className="w-2/3 ">
                             <div className="relative">
                               <button type="button" className="w-full p-2 bg-b3 rounded border border-black"
-                                onClick={() => handleCategoryToggle2(index)}>
+                                onClick={() => {
+                                  handleCategoryToggle2(index)
+                                  if (showCategories2) {
+                                    setShowCategories2(false)
+                                  }
+
+                                }
+                                }>
                                 {formData.empSkill ? formData.empSkill : "Select Skill"}
 
                               </button>
@@ -949,7 +995,7 @@ export default function CreateProject() {
                           {formData.selectedEmp?.map((employee, index) => (
                             employee.length != 0 &&
                             <div key={index} className="flex flex-row p-2">
-                              
+
                               <span>For <span className="text-o1">{employee[1]}</span> : Selected Employee <span className="text-o1">{employee[0]}</span></span>
                             </div>
                           ))}

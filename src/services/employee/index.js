@@ -64,6 +64,29 @@ export const getEmpBySkill = async (empSkill) => {
 
 }
 
+export const getEmpByName = async (empName) => {
+    const newform = {
+        empName:empName,
+    }
+    console.log("🚀 ~ getEmpBySkill ~ newform:", newform)
+    try {
+        const response = await fetch("/api/getEmpByName", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(newform),
+        });
+
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 export const updateEmpAv = async (emparr,skills,mnhr) =>{
     const newform = {
         employees:emparr,
