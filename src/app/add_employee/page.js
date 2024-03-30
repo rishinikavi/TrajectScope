@@ -5,7 +5,7 @@ import { useState } from "react";
 import Navbar from "../components/navBar";
 
 const skillsData = {
-    "Programming Languages": ["Python", "JavaScript", "Java", "C#", "Ruby", "Go", "TypeScript", "Kotlin", "Swift"],
+    "Programming Languages": ["Python", "JavaScript", "Java", "C#", "Ruby", "Go", "TypeScript", "Kotlin", "Swift", "MySQL", "Microsoft SQL Serve", "PostgreSQL"],
     "Development Frameworks and Libraries": ["React", "Angular", "Vue.js", "Node.js", "Express.js", "Django", "Spring Boot", "Flask"],
     "Cloud Platforms and Services": ["AWS", "Azure", "Google Cloud Platform", "Heroku", "DigitalOcean", "Firebase", "IBM Cloud"],
     "Continuous Integration/Continuous Deployment (CI/CD) Tools": ["Jenkins", "Travis CI", "CircleCI", "GitLab CI", "GitHub Actions", "Bamboo", "TeamCity"],
@@ -123,7 +123,7 @@ export default function AddEmployee() {
                             >
                                 <option value="">Select Designation</option>
                                 {/* Replace this array with your actual list of skills */}
-                                {["Intern", "Associate", "Senior", "Lead", "Technical Lead", "Assistant Manager", "Assistant Technical Lead"].map((skillName) => (
+                                {["Intern", "Associate", "Senior", "Lead",  "Assistant Manager", "Assistant Technical Lead"].map((skillName) => (
                                     <option key={skillName} value={skillName}>
                                         {skillName}
                                     </option>
@@ -236,6 +236,7 @@ export default function AddEmployee() {
                                 {["Software Developer",
                                     "Business Analyst",
                                     "UI Designer",
+                                    "Technical Lead",
                                     "DevOps Engineer",
                                     "Quality Assurance",
                                     "Software Architect",
