@@ -392,7 +392,7 @@ export default function CreateProject() {
                   <div className="flex flex-row gap-2 justify-evenly">
                     {bestData != "" ? bestData.map((item, index) => (
                       item.name == null ?
-                        <div key={item[0]._id}>
+                        <div key={item[0]?._id}>
                           <div className="flex flex-col">
                             {formData.skills[index] ?
                               <span>Skill : {formData.skills[index]?.skill}</span>

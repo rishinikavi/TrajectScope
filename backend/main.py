@@ -176,8 +176,16 @@ class InputComment(BaseModel):
 
 @app.post("/test/")
 async def test(string_input:InputComment):
+    print(string_input.comment)
     clean_review = cleanData([string_input.comment])[0]
+    print("clean_review")
+    print(clean_review)
     new_review_tfidf = loaded_tfidf_vectorizer.transform([clean_review])
+    print("new_review_tfidf")
+    print(new_review_tfidf)
     prediction = loaded_model.predict(new_review_tfidf)[0]
+    print("prediction")
+    print(prediction)
+    prediction = int(prediction)
     return prediction
 
