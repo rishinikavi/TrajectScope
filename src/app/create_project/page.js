@@ -87,6 +87,8 @@ export default function CreateProject() {
   }
 
   async function handleBestSelect() {
+    setShowDialogCreate(true)
+    setShowDialog(true)
     console.log(formData.clientName)
     console.log(formData.projectName)
     // console.log(formData.estimatedCost)
@@ -95,10 +97,13 @@ export default function CreateProject() {
     console.log("🚀 ~ handleBestSelect ~ res:", res)
     const upres = await updateEmpAv(bestData, formData.skills, formData.manHr)
     console.log("🚀 ~ handleBestSelect ~ upres:", upres)
-    // router.push("/main_page")
+    setShowDialogCreate(false)
+    router.push("/main_page")
   }
 
   async function handleAVGSelect() {
+    setShowDialogCreate(true)
+    setShowDialog(true)
     console.log(formData.clientName)
     console.log(formData.projectName)
     // console.log(formData.estimatedCost)
@@ -107,10 +112,13 @@ export default function CreateProject() {
     console.log("🚀 ~ handleBestSelect ~ res:", res)
     const upres = await updateEmpAv(avgData, formData.skills, formData.manHr)
     console.log("🚀 ~ handleBestSelect ~ upres:", upres)
+    setShowDialogCreate(false)
     router.push("/main_page")
   }
 
   async function handleCostSelect() {
+    setShowDialogCreate(true)
+    setShowDialog(true)
     console.log(formData.clientName)
     console.log(formData.projectName)
     // console.log(formData.estimatedCost)
@@ -119,6 +127,7 @@ export default function CreateProject() {
     console.log("🚀 ~ handleBestSelect ~ res:", res)
     const upres = await updateEmpAv(costData, formData.skills, formData.manHr)
     console.log("🚀 ~ handleBestSelect ~ upres:", upres)
+    setShowDialogCreate(false)
     router.push("/main_page")
   }
 
@@ -210,6 +219,8 @@ export default function CreateProject() {
   }
 
   async function handleSelection() {
+    setShowDialogCreate(true)
+    setShowDialog(true)
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
     const selectedValuesCK = Array.from(checkboxes).map(checkbox => checkbox.value);
 
@@ -229,6 +240,7 @@ export default function CreateProject() {
     console.log("🚀 ~ handleSelection ~ resultArray:", resultArray);
     const res = await addProject(formData.clientName, formData.projectName, resultArray, resultArray)
     const upres = await updateEmpAv(resultArray, formData.skills, formData.manHr)
+    setShowDialogCreate(false)
     router.push("/main_page")
   }
 
@@ -336,10 +348,37 @@ export default function CreateProject() {
     setEmpNames(res.empdata);
   }
 
+  const [showDialog, setShowDialog] = useState(false)
+  const [showDialogCreate, setShowDialogCreate] = useState(false)
+
   return (
     <main >
       <Navbar />
       <div className="flex min-h-screen flex-col items-center justify-start gap-2 p-24 bg-b1">
+        {
+          showDialog &&
+          <div class="rounded fixed top-0 left-0 flex items-center justify-center w-full h-full z-10"
+            style={{ backgroundColor: 'rgba(0,0,0,.5)' }}
+            x-show="open">
+            <div class=" h-auto p-4 mx-2 text-left bg-b2 rounded-3xl shadow-xl dark:bg-b2 md:max-w-xl md:p-6 lg:p-8 md:mx-0"
+            >
+              <div class="flex justify-center mb-4">
+                <button
+                  class=" dark:text-o1 dark:hover:text-o1 hover:text-o1">
+                  <FaFirstOrderAlt size={52} />
+                </button>
+              </div>
+              <div class="mb-4 text-center">
+                <h2 class="text-2xl font-bold leading-snug text-o1 dark:text-gray-400">
+                  {
+                    showDialogCreate ? "Creating" : "Project Created"
+                  }
+
+                </h2>
+              </div>
+            </div>
+          </div >
+        }
         {
           showMid ?
             <div className="bg-b2 shadow-xl w-1/2 p-2 rounded-2xl">
