@@ -24,7 +24,6 @@ export async function POST(req) {
             for (let index = 0; index < extractData.skills.length; index++) {
                 const element = (extractData.skills[index].percentage / 100) * extractData.manHr;
 
-                for (let indexj = 1; indexj < extractData.selectedEmp.length; indexj++) {
                     if(extractData.skills[index].skill == extractData.selectedEmp[index][1]){
                         const empdata1 = await employees.find({ $and: [{ "skills": extractData.selectedEmp[index][1] }, { "name": extractData.selectedEmp[index][0] }] });
                         console.log("🚀 🚀  ~ POST ~ empdata1: 🚀 🚀 ", empdata1)
@@ -48,7 +47,7 @@ export async function POST(req) {
                         appendedEmpDataCost.push(empCost);
                     }
                 }
-            }
+            
 
         } else {
             console.log("🚀🚀🚀 ~ POST ~ extractData:", "no selectedEmp")

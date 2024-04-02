@@ -33,7 +33,7 @@ export default function CreateProject() {
   const [costData, setcostData] = useState("");
   const [empAvilable, setempAvilable] = useState(false);
   const [shiowAvilable, setshiowAvilable] = useState(false);
-  const [SelectedEmp, setSelectedEmp] = useState([[]]);
+  const [SelectedEmp, setSelectedEmp] = useState([]);
   const [showMid, setShowMid] = useState(false);
   const [showBestEdit, setShowBestEdit] = useState(false);
   const [showAVGEdit, setShowAVGEdit] = useState(false);
@@ -482,7 +482,7 @@ export default function CreateProject() {
                   <div className="flex flex-row gap-2 justify-evenly ">
                     {avgData != "" ? avgData.map((item, index) => (
                       item.name == null ?
-                        <div key={item[0]._id}>
+                        <div key={item[0]?._id}>
                           <div className="flex flex-col">
                             {formData.skills[index] ?
                               <span>Skill : {formData.skills[index]?.skill}</span>
@@ -947,77 +947,72 @@ export default function CreateProject() {
                         </div>
                       </div>
 
-                      {formData.skills.map((skill, index) => (
-                        index == 0 &&
-                        <div key={index} className="flex flex-row gap-2">
-                          <span className=" p-2 w-1/3" >Skill</span>
+                      <div className="flex flex-row gap-2">
+                        <span className=" p-2 w-1/3" >Skill</span>
 
-                          <div className="w-2/3 ">
-                            <div className="relative">
-                              <button type="button" className="w-full p-2 bg-b3 rounded border border-black"
-                                onClick={() => {
-                                  handleCategoryToggle2(index)
-                                  if (showCategories2) {
-                                    setShowCategories2(false)
-                                  }
-
+                        <div className="w-2/3 ">
+                          <div className="relative">
+                            <button type="button" className="w-full p-2 bg-b3 rounded border border-black"
+                              onClick={() => {
+                                handleCategoryToggle2(0)
+                                if (showCategories2) {
+                                  setShowCategories2(false)
                                 }
-                                }>
-                                {formData.empSkill ? formData.empSkill : "Select Skill"}
 
-                              </button>
-                              {showCategories2[index] && (
-                                <div className="absolute top-full left-0 bg-b2 rounded shadow-md w-full z-10">
-                                  {Object.entries(skillsData).map(([category, skills]) => (
-                                    <div key={category} className="border-t border-gray-300">
-                                      <div
-                                        className="flex items-center justify-between cursor-pointer px-4 py-2"
-                                        onClick={() => handleCategoryToggle3(category)}
-                                      >
-                                        <span className="text-o1 font-bold">{category}</span>
-                                        <svg
-                                          className="h-5 w-5 transform transition-transform"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                          style={{ transform: category === selectedCategory ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                                        ></svg>
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                                      </div>
-                                      {selectedCategory2 === category && (
-                                        <div className="px-2">
-                                          <select
-                                            className="w-full p-2 bg-b3 rounded border border-black"
-                                            value={skill.skill}
-                                            name="skill"
-                                            onChange={(event) => {
-                                              setFormData({
-                                                ...formData,
-                                                empSkill: event.target.value,
-                                              });
-                                              setShowCategories2(false)
-                                            }}
-                                            required
-                                          >
-                                            <option value="">Select Skill</option>
-                                            {skills.map((skillName) => (
-                                              <option key={skillName} value={skillName}>
-                                                {skillName}
-                                              </option>
-                                            ))}
-                                          </select>
-                                        </div>
-                                      )}
+                              }
+                              }>
+                              {formData.empSkill ? formData.empSkill : "Select Skill"}
+                            </button>
+                            {showCategories2[0] && (
+                              <div className="absolute top-full left-0 bg-b2 rounded shadow-md w-full z-10">
+                                {Object.entries(skillsData).map(([category, skills]) => (
+                                  <div key={category} className="border-t border-gray-300">
+                                    <div
+                                      className="flex items-center justify-between cursor-pointer px-4 py-2"
+                                      onClick={() => handleCategoryToggle3(category)}
+                                    >
+                                      <span className="text-o1 font-bold">{category}</span>
+                                      <svg
+                                        className="h-5 w-5 transform transition-transform"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        style={{ transform: category === selectedCategory ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                                      ></svg>
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
                                     </div>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
+                                    {selectedCategory2 === category && (
+                                      <div className="px-2">
+                                        <select
+                                          className="w-full p-2 bg-b3 rounded border border-black"
+                                          // value={skill.skill}
+                                          name="skill"
+                                          onChange={(event) => {
+                                            setFormData({
+                                              ...formData,
+                                              empSkill: event.target.value,
+                                            });
+                                            setShowCategories2(false)
+                                          }}
+                                          required
+                                        >
+                                          <option value="">Select Skill</option>
+                                          {skills.map((skillName) => (
+                                            <option key={skillName} value={skillName}>
+                                              {skillName}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
                           </div>
-
                         </div>
 
-                      ))}
+                      </div>
 
                       <button type="button" onClick={handelFind} className="bg-o1 text-b1 font-bold rounded p-2 ">Find</button>
                       {
